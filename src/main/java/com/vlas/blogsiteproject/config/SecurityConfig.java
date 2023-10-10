@@ -16,16 +16,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/home","/registration").permitAll() // Разрешить доступ для всех к /home
-                .antMatchers("/post", "/my-blog","/post", "/archive").authenticated() // Требовать аутентификации для /post и /page
+                .antMatchers("/home","/registration").permitAll()
+                .antMatchers("/post", "/my-blog","/post", "/archive").authenticated()
                 .and()
                 .formLogin()
-                //.loginPage("/login") // Указать страницу для входа
-                .permitAll(); // Разрешить доступ к странице входа всем
+                //.loginPage("/login")
+                .permitAll();
                 //.and()
                 //.logout()
                 //.logoutSuccessUrl("/")
-               // .permitAll(); // Разрешить доступ всем к выходу
+               // .permitAll();
     }
     @Bean
     public PasswordEncoder passwordEncoder(){

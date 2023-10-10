@@ -1,5 +1,6 @@
 package com.vlas.blogsiteproject.controller;
 
+import com.vlas.blogsiteproject.dao.UserDetailRepository;
 import com.vlas.blogsiteproject.dao.UserRepository;
 import com.vlas.blogsiteproject.entities.Post;
 import com.vlas.blogsiteproject.entities.User;
@@ -21,6 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.Principal;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -34,8 +37,7 @@ public class MyController {
     UserDetailsService userDetailsService;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    UserRepository userRepository;
+
 
     private static final String UPLOAD_DIR = "D:/post_images"; // Директория для загрузки файлов
 
@@ -72,22 +74,22 @@ public class MyController {
     }*/
 
 
-
-
     @RequestMapping("/home")
     public String mainPage(Model model) {
         return "index";
     }
+
     @RequestMapping("/post")
     public String postPage(Model model) {
         Post post = new Post();
         model.addAttribute("post", post);
         return "post";
     }
-    @RequestMapping("/my-blog")
+
+/*    @RequestMapping("/my-blog")
     public String myBlog() {
         return "page";
-    }
+    }*/
 
     @RequestMapping("/archive")
     public String allBlogs() {
@@ -103,7 +105,7 @@ public class MyController {
     }*/
 
 
-    @RequestMapping ("/savePost")
+    @RequestMapping("/savePost")
     public String savePost(@ModelAttribute("post") Post post,
                            @RequestParam("imageFile") MultipartFile imageFile, Authentication authentication) {
         authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -115,7 +117,7 @@ public class MyController {
                 String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
                 String filePath = Paths.get(UPLOAD_DIR, fileName).toString();
                 Files.write(Paths.get(filePath), imageFile.getBytes());
-                post.setUser(userRepository.findByUsername(username));
+                post.setUser(userService.findByUsername(username));
                 post.setPicture(filePath);
                 postService.savePost(post);
 
@@ -127,7 +129,7 @@ public class MyController {
     }
 
     @RequestMapping("/registration")
-    public String registration(Model model){
+    public String registration(Model model) {
         UserDetail userDetail = new UserDetail();
         User user = new User();
         model.addAttribute("user", user);
@@ -135,21 +137,25 @@ public class MyController {
 
         return "registration";
     }
+
     @RequestMapping("/register")
     public String registerUser(@ModelAttribute("user") User user, @ModelAttribute("userDetail") UserDetail userDetail) {
         String hashPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashPassword);
         user.setUserDetail(userDetail);
         userDetail.setUser(user);
-       userService.saveUser(user);
-       userDetailsService.saveUserDetail(userDetail);
-       return "redirect:/";
+        userService.saveUser(user);
+        userDetailsService.saveUserDetail(userDetail);
+        return "redirect:/";
     }
 
 
-    @RequestMapping("/loginCheck")
-    public String loginCheck(){
-        return "index";
+    @RequestMapping("/my-blog")
+    public String showMyPosts(Model model, Authentication authentication) {
+        authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        List<Post> postList = userService.findByUsername(username).getPostList();
+        model.addAttribute("posts", postList);
+        return "page";
     }
-
 }

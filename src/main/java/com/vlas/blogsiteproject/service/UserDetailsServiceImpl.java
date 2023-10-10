@@ -38,4 +38,9 @@ public class UserDetailsServiceImpl implements UserDetailsService{
         }
         return userDetail;
     }
+
+/*    @Override
+    public User findByUsername(String username) {
+        return userDetailRepository.findByUsername(username);
+    }*/
 }

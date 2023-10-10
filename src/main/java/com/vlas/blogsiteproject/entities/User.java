@@ -28,11 +28,8 @@ public class User {
     @JoinColumn(name = "key_user_detail_id")
     private UserDetail userDetail;
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH})
-    @JoinTable(name = "user_and_post",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id"))
-    //@JoinColumn(name = "post_id")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},
+    mappedBy = "user")
     private List<Post> postList;
 
     public User() {

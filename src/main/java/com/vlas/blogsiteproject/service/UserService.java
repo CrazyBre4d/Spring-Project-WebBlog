@@ -13,4 +13,5 @@ public interface UserService {
     public void deleteUser(Long id);
 
     public User getUser(Long id);
+    public User findByUsername(String username);
 }
