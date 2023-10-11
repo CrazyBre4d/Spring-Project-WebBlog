@@ -62,7 +62,7 @@
     
     <div class="main-wrapper">
 	    <header class="page-title theme-bg-light text-center gradient py-5">
-			<h1 class="heading"   >Как поживаете? </h1>
+			<h1 class="heading">Как поживаете? </h1>
 
 		</header>
 <!--		<section class="theme-bg-dark py-5 text-center text-light">
@@ -88,14 +88,40 @@
 
 
 
+
+				<head>
+					<meta charset="UTF-8">
+					<title>Ваши посты</title>
+					<style>
+						table {
+							width: 100%;
+							border-collapse: collapse;
+						}
+						th, td {
+							border: 1px solid #ccc;
+							padding: 8px;
+							text-align: left;
+						}
+						th {
+							background-color: #f2f2f2;
+						}
+						tr:nth-child(even) {
+							background-color: #f2f2f2;
+						}
+						tr:nth-child(odd) {
+							background-color: #fff;
+						}
+					</style>
+				</head>
+				<body>
+				<h2>Ваши посты</h2>
 				<table>
 					<thead>
 					<tr>
-						<th>Name</th>
-						<th>Surname</th>
-						<th>Department</th>
-						<th>Salary</th>
-						<th>Actions</th>
+						<th>ID</th>
+						<th>Заголовок поста</th>
+						<th>Текст поста</th>
+						<th>Изображение поста</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -103,10 +129,8 @@
 						<td th:text="${post.postId}"></td>
 						<td th:text="${post.title}"></td>
 						<td th:text="${post.body}"></td>
-						<td th:image="${post.picture}"></td>
 						<td>
-							<!--<a th:href="@{/updateInfo(empId=${emp.id})}">Update</a>
-							<a th:href="@{/deleteEmployee(empId=${emp.id})}">Delete</a>-->
+							<img th:src="${post.picture}" alt="Изображение поста" />
 						</td>
 					</tr>
 					</tbody>
@@ -114,19 +138,13 @@
 
 
 
-
 		    </div>
 	    </article>
-	    
-	    
-	    
-	    <footer class="footer text-center py-2 theme-bg-dark">
 
+	    <footer class="footer text-center py-2 theme-bg-dark">
 			<p class="copyright">Подвал Власа и Жени</a></p>
-		   
 	    </footer>
-    
-    </div><!--//main-wrapper-->
+    </div>
     
     
     <!-- Bootstrap Javascript -->          

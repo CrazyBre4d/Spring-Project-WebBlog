@@ -1,5 +1,6 @@
 package com.vlas.blogsiteproject.controller;
 
+import com.vlas.blogsiteproject.config.ImageSaver;
 import com.vlas.blogsiteproject.dao.UserDetailRepository;
 import com.vlas.blogsiteproject.dao.UserRepository;
 import com.vlas.blogsiteproject.entities.Post;
@@ -39,7 +40,7 @@ public class MyController {
     private PasswordEncoder passwordEncoder;
 
 
-    private static final String UPLOAD_DIR = "D:/post_images"; // Директория для загрузки файлов
+    //private static final String UPLOAD_DIR = "D:/post_images"; // Директория для загрузки файлов
 
 
 /*    @RequestMapping("/")
@@ -75,7 +76,10 @@ public class MyController {
 
 
     @RequestMapping("/home")
-    public String mainPage() {
+    public String mainPage(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean loggedIn = authentication != null && authentication.isAuthenticated();
+        model.addAttribute("loggedIn", loggedIn);
         return "index";
     }
 
@@ -86,10 +90,6 @@ public class MyController {
         return "post";
     }
 
-/*    @RequestMapping("/my-blog")
-    public String myBlog() {
-        return "page";
-    }*/
 
     @RequestMapping("/archive")
     public String allBlogs() {
@@ -113,11 +113,12 @@ public class MyController {
 
         if (!imageFile.isEmpty()) {
             try {
-                String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
-                String filePath = Paths.get(UPLOAD_DIR, fileName).toString();
-                Files.write(Paths.get(filePath), imageFile.getBytes());
+               // String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
+               // String filePath = Paths.get(UPLOAD_DIR, fileName).toString();
+               // Files.write(Paths.get(filePath), imageFile.getBytes());
+                String imageFilePath = ImageSaver.save(imageFile);
                 post.setUser(userService.findByUsername(username));
-                post.setPicture(filePath);
+                post.setPicture(imageFilePath);
                 postService.savePost(post);
 
             } catch (IOException e) {
