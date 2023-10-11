@@ -75,7 +75,7 @@ public class MyController {
 
 
     @RequestMapping("/home")
-    public String mainPage(Model model) {
+    public String mainPage() {
         return "index";
     }
 
@@ -110,7 +110,6 @@ public class MyController {
                            @RequestParam("imageFile") MultipartFile imageFile, Authentication authentication) {
         authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-
 
         if (!imageFile.isEmpty()) {
             try {
@@ -158,4 +157,5 @@ public class MyController {
         model.addAttribute("posts", postList);
         return "page";
     }
+
 }

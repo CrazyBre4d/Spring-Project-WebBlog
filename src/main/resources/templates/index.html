@@ -47,13 +47,6 @@
 					</li>
 				</ul>
 				<hr>
-				<!--<ul class="social-list list-inline py-3 mx-auto">
-					<li class="list-inline-item"><a href="#"><i class="fab fa-twitter fa-fw"></i></a></li>
-					<li class="list-inline-item"><a href="#"><i class="fab fa-linkedin-in fa-fw"></i></a></li>
-					<li class="list-inline-item"><a href="#"><i class="fab fa-github-alt fa-fw"></i></a></li>
-					<li class="list-inline-item"><a href="#"><i class="fab fa-stack-overflow fa-fw"></i></a></li>
-					<li class="list-inline-item"><a href="#"><i class="fab fa-codepen fa-fw"></i></a></li>
-				</ul>-->
 
 			</div>
 		</nav>
@@ -69,19 +62,17 @@
 				<div class="col mb-4">
 					<div class="card">
 						<div class="card-body">
-							<!--<button formaction="/registration">Зарегистрироваться </button>-->
-							<h5 class="card-title">Войти</h5>
-							<button > </button>
-							<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+							<a th:href="@{/login}" class="sign-up-button">Войти</a>
+							<p class="card-text">Выполните вход в существующий аккаунт, если он у вас имеется.</p>
 						</div>
 					</div>
 				</div>
 				<div class="col mb-4">
 					<div class="card">
 						<div class="card-body">
-						<!--	<button formaction="/login">Войти </button>-->
-							<h5 class="card-title">Зарегистрироваться</h5>
-							<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+							 <a th:href="@{/registration}" class="registration-button">Регистрация</a>
+
+							<p class="card-text">Зарегистрируйтесь на нашем сайте, чтобы создать собственный блог и создавать посты.</p>
 						</div>
 					</div>
 				</div>
@@ -119,7 +110,7 @@
                     <button type="submit" class="btn btn-primary">Subscribe</button>
                 </form>
 				</section>-->
-
+		</div>
 	    </article>
 	    <footer class="footer text-center py-2 theme-bg-dark">
 

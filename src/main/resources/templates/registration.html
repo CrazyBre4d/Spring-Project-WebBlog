@@ -1,28 +1,76 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Регистрация</title>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+
+
+        }
+        h2 {
+            color: #333;
+        }
+        form {
+            background-color: #fff;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            width: 330px;
+            text-align: left;
+
+        }
+        input[type="text"], input[type="password"], input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+
+        }
+        .center-top {
+            margin-bottom: 10px;
+        }
+        .center-bottom {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-<h2>Регистрация</h2>
-<form th:action="@{/register}"  method="post">
+<h2 class="center-top">Регистрация</h2>
+<form th:action="@{/register}" method="post" class="center-bottom">
     <input type="hidden" th:field="*{user.userId}" />
     <input type="hidden" th:field="*{user.userDetail}" />
     <input type="hidden" th:field="*{userDetail.userDetailId}" />
 
     Логин <input type="text" th:field="*{user.username}" /><br><br>
-    Пароль <input type="text" th:field="*{user.password}" /><br><br>
+    Пароль <input type="password" th:field="*{user.password}" /><br><br>
 
-  Возраст<input type="text" th:field="*{userDetail.age}" />
-  Имя<input type="text" th:field="*{userDetail.name}" />
-  Фамилия<input type="text" th:field="*{userDetail.surname}" />
-  Город<input type="text" th:field="*{userDetail.city}" />
-  О себе<input type="text" th:field="*{userDetail.description}" />
-  Почта<input type="text" th:field="*{userDetail.email}" />
-  Дата регистрации<input type="date" th:field="*{userDetail.dateOfRegistration}" />
-
-  <input type="submit" value="Зарегистрироваться" />
+    Возраст <input type="text" th:field="*{userDetail.age}" />
+    Имя <input type="text" th:field="*{userDetail.name}" />
+    Фамилия <input type="text" th:field="*{userDetail.surname}" />
+    Город <input type="text" th:field="*{userDetail.city}" />
+    О себе <input type="text" th:field="*{userDetail.description}" />
+    Почта <input type="text" th:field="*{userDetail.email}" />
+    Дата регистрации <input type="date" th:field="*{userDetail.dateOfRegistration}" />
+    <br>
+    <input type="submit" value="Зарегистрироваться" />
 </form>
 </body>
 </html>
