@@ -104,7 +104,6 @@ public class MyController {
         return "redirect:/";
     }
 
-
     @RequestMapping("/my-blog")
     public String showMyPosts(Model model, Authentication authentication) {
         authentication = SecurityContextHolder.getContext().getAuthentication();
