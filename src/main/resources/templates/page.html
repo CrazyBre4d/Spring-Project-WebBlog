@@ -53,18 +53,23 @@
     </header>
     <div class="main-wrapper">
 	    <header class="page-title theme-bg-light text-center gradient py-5">
-			<h1 class="heading">Как поживаете, <span th:text="${user.getUserDetail().name}"></span>?  </h1>
+			<h1 class="heading">Как поживаете, <span th:text="${user.getUserDetail().name}"></span>? </h1>
 		</header>
 	    <article class="about-section content px-3 py-5 p-md-5">
 		    <div class="container">			    
-			    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. </p>
-			    <figure><img class="img-fluid" src="images/about-me.jpg" alt="image"></figure>
-			    <h5 class="mt-5">About The Blog</h5>
+			    <p> Возраст:<span th:text="${user.getUserDetail().age}"/><br><br>
+					Имя:<span th:text="${user.getUserDetail().name}"/><br><br>
+					Фамилия:<span th:text="${user.getUserDetail().surname}"/><br><br>
+					Почта:<span th:text="${user.getUserDetail().email}"/><br><br>
+					Дата регистрации:<span th:text="${user.getUserDetail().dateOfRegistration}"/><br><br>
+				</p>
+			    <figure><img class="img-fluid" th:src="@{|/images/from_server/${user.getUserDetail().getProfileImage()}|}" alt="image"></figure>
+			    <h5 class="mt-5">О моем блоге:</h5>
 			    <p>Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus.</p>
-			    <h5 class="mt-5">My Skills and Experiences</h5>
-			    <p>Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.</p>
-			    <h5 class="mt-5">Side Projects</h5>
-			    <p>Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.</p>
+			    <h5 class="mt-5">Подробнее обо мне:</h5>
+			    <p> Город:<span th:text="${user.getUserDetail().city}"/><br><br>
+					Описание:<span th:text="${user.getUserDetail().description}"/><br><br>
+				</p>
 				<head>
 					<meta charset="UTF-8">
 					<title>Ваши посты</title>
@@ -98,6 +103,7 @@
 						<th>Заголовок поста</th>
 						<th>Текст поста</th>
 						<th>Изображение поста</th>
+						<th>Время публикации</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -106,8 +112,9 @@
 						<td th:text="${post.title}"></td>
 						<td th:text="${post.body}"></td>
 						<td>
-							<img th:src="${post.picture}" alt="Изображение поста" />
+							<img th:src="@{|/images/from_server/${post.picture}|}" alt="Изображение поста" width="100" height="100"/>
 						</td>
+						<td th:text="${post.dateTime}"></td>
 					</tr>
 					</tbody>
 				</table>

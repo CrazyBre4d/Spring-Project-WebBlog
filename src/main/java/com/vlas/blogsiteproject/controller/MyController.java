@@ -88,20 +88,29 @@ public class MyController {
     }
 
     @RequestMapping("/register")
-    public String registerUser(@ModelAttribute("user") User user, @ModelAttribute("userDetail") UserDetail userDetail) {
-        LocalDate date = LocalDate.now();
-        String hashPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(hashPassword);
-        userDetail.setDateOfRegistration(date);
+    public String registerUser(@ModelAttribute("user") User user, @ModelAttribute("userDetail")UserDetail userDetail,
+                               @RequestParam("imageFile") MultipartFile imageFile, Authentication authentication) {
+        if (!imageFile.isEmpty()) {
+            try {
+                String imageFilePath = ImageSaver.save(imageFile);
+                LocalDate date = LocalDate.now();
+                String hashPassword = passwordEncoder.encode(user.getPassword());
 
-        user.setUserDetail(userDetail);
-        userDetail.setUser(user);
+                user.setPassword(hashPassword);
+                userDetail.setDateOfRegistration(date);
+                userDetail.setProfileImage(imageFilePath);
 
-        userService.saveUser(user);
-        userDetailsService.saveUserDetail(userDetail);
+                user.setUserDetail(userDetail);
+                userDetail.setUser(user);
+
+                userService.saveUser(user);
+                userDetailsService.saveUserDetail(userDetail);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
 
-        return "redirect:/";
+        }return "redirect:/";
     }
 
     @RequestMapping("/my-blog")

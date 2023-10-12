@@ -38,6 +38,9 @@ public class UserDetail {
     @Column(name = "date_of_registration")
     private LocalDate dateOfRegistration;
 
+    @Column(name = "profile_image")
+    private String profileImage;
+
     @OneToOne(mappedBy = "userDetail", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private User user;
 

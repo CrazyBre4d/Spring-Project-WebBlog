@@ -15,6 +15,6 @@ public class ImageSaver {
         String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
         String filePath = Paths.get(UPLOAD_DIR, fileName).toString();
         Files.write(Paths.get(filePath), imageFile.getBytes());
-        return filePath;
+        return fileName;
     }
 }

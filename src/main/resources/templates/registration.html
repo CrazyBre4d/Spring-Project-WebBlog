@@ -54,7 +54,7 @@
 </head>
 <body>
 <h2 class="center-top">Регистрация</h2>
-<form th:action="@{/register}" method="post" class="center-bottom">
+<form th:action="@{/register}" method="post" class="center-bottom" enctype="multipart/form-data">
     <input type="hidden" th:field="*{user.userId}" />
     <input type="hidden" th:field="*{user.userDetail}" />
     <input type="hidden" th:field="*{userDetail.userDetailId}" />
@@ -69,6 +69,8 @@
     Город <input type="text" th:field="*{userDetail.city}" />
     О себе <input type="text" th:field="*{userDetail.description}" />
     Почта <input type="text" th:field="*{userDetail.email}" />
+    <label for="image">Выберите фото профиля:</label><br><br>
+    <input type="file" id="image" name="imageFile" accept="image/*" required /><br><br>
     <!--Дата регистрации <input type="date" th:field="*{userDetail.dateOfRegistration}" />-->
     <br>
     <input type="submit" value="Зарегистрироваться" />
