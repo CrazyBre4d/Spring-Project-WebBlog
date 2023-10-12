@@ -52,7 +52,9 @@ public class MyController {
     }
 
     @RequestMapping("/archive")
-    public String allBlogs() {
+    public String allBlogs(Model model, Authentication authentication) {
+        List<User> usersList = userService.getAllUsers();
+        model.addAttribute("usersList", usersList);
         return "archive";
     }
 
