@@ -1,8 +1,6 @@
 package com.vlas.blogsiteproject.controller;
 
 import com.vlas.blogsiteproject.config.ImageSaver;
-import com.vlas.blogsiteproject.dao.UserDetailRepository;
-import com.vlas.blogsiteproject.dao.UserRepository;
 import com.vlas.blogsiteproject.entities.Post;
 import com.vlas.blogsiteproject.entities.User;
 import com.vlas.blogsiteproject.entities.UserDetail;
@@ -19,14 +17,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.Principal;
 import java.util.List;
-import java.util.UUID;
-
 
 @Controller
 public class MyController {
@@ -39,41 +31,7 @@ public class MyController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
     //private static final String UPLOAD_DIR = "D:/post_images"; // Директория для загрузки файлов
-
-
-/*    @RequestMapping("/")
-    public String showAllEmployees(Model model) {
-
-        List<Employee> allEmployees = employeeService.getAllEmployees();
-        model.addAttribute("allEmps", allEmployees);
-
-        return "all-employees";
-    }
-
-    @RequestMapping("/addNewEmployee")
-    public String addNewEmployee(Model model) {
-        Employee employee = new Employee();
-        model.addAttribute("employee", employee);
-        return "employee-info";
-    }
-
-
-
-    @RequestMapping("/updateInfo")
-    public String updateEmployee(@RequestParam("empId") int id, Model model) {
-        Employee employee = employeeService.getEmployee(id);
-        model.addAttribute("employee", employee);
-        return "employee-info";
-    }
-
-    @RequestMapping("/deleteEmployee")
-    public String deleteEmployee(@RequestParam("empId") int id) {
-        employeeService.deleteEmployee(id);
-        return "redirect:/";
-    }*/
-
 
     @RequestMapping("/home")
     public String mainPage(Model model) {
@@ -90,19 +48,10 @@ public class MyController {
         return "post";
     }
 
-
     @RequestMapping("/archive")
     public String allBlogs() {
         return "archive";
     }
-
-
-/*    @RequestMapping("/addPost")
-    public String addPost(Model model) {
-        Post post = new Post();
-        model.addAttribute("post", post);
-        return "add-post";
-    }*/
 
 
     @RequestMapping("/savePost")
@@ -120,7 +69,6 @@ public class MyController {
                 post.setUser(userService.findByUsername(username));
                 post.setPicture(imageFilePath);
                 postService.savePost(post);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -134,7 +82,6 @@ public class MyController {
         User user = new User();
         model.addAttribute("user", user);
         model.addAttribute("userDetail", userDetail);
-
         return "registration";
     }
 
@@ -156,6 +103,8 @@ public class MyController {
         String username = authentication.getName();
         List<Post> postList = userService.findByUsername(username).getPostList();
         model.addAttribute("posts", postList);
+        User user = userService.findByUsername(username);
+        model.addAttribute("user", user);
         return "page";
     }
 

@@ -731,3 +731,42 @@ div.comment:first-of-type {
 .comment-reply-title small a:hover {
 	text-decoration: underline;
 }
+/* Стили для формы */
+form {
+    max-width: 400px; /* Максимальная ширина формы */
+    margin: 0 auto; /* Центрирование формы по горизонтали */
+    padding: 20px; /* Внутренний отступ формы */
+    border: 1px solid #ddd; /* Граничная линия формы */
+    background-color: #f5f5f5; /* Фон формы */
+}
+
+/* Стили для текстовых полей */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+/* Стили для заголовка и кнопки OK */
+label {
+    font-weight: bold;
+    color: #6f42c1;
+}
+
+input[type="submit"] {
+    background-color: #6f42c1; /* Цвет фона кнопки */
+    color: #fff; /* Цвет текста кнопки */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Стили для заголовка "Выберите изображение" */
+label[for="image"] {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block; /* Перевод на новую строку */
+}
