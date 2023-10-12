@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -57,15 +60,14 @@ public class MyController {
     @RequestMapping("/savePost")
     public String savePost(@ModelAttribute("post") Post post,
                            @RequestParam("imageFile") MultipartFile imageFile, Authentication authentication) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+
         authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-
         if (!imageFile.isEmpty()) {
             try {
-               // String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
-               // String filePath = Paths.get(UPLOAD_DIR, fileName).toString();
-               // Files.write(Paths.get(filePath), imageFile.getBytes());
                 String imageFilePath = ImageSaver.save(imageFile);
+                post.setDateTime(localDateTime);
                 post.setUser(userService.findByUsername(username));
                 post.setPicture(imageFilePath);
                 postService.savePost(post);
@@ -87,12 +89,18 @@ public class MyController {
 
     @RequestMapping("/register")
     public String registerUser(@ModelAttribute("user") User user, @ModelAttribute("userDetail") UserDetail userDetail) {
+        LocalDate date = LocalDate.now();
         String hashPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashPassword);
+        userDetail.setDateOfRegistration(date);
+
         user.setUserDetail(userDetail);
         userDetail.setUser(user);
+
         userService.saveUser(user);
         userDetailsService.saveUserDetail(userDetail);
+
+
         return "redirect:/";
     }
 

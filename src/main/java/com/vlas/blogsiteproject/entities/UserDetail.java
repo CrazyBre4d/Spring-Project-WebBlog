@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -35,7 +36,7 @@ public class UserDetail {
     private String email;
 
     @Column(name = "date_of_registration")
-    private Date dateOfRegistration;
+    private LocalDate dateOfRegistration;
 
     @OneToOne(mappedBy = "userDetail", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private User user;
@@ -43,7 +44,7 @@ public class UserDetail {
     public UserDetail() {
     }
 
-    public UserDetail(String name, String surname, int age, String city, String description, String email, Date dateOfRegistration) {
+    public UserDetail(String name, String surname, int age, String city, String description, String email, LocalDate dateOfRegistration) {
         this.name = name;
         this.surname = surname;
         this.age = age;
