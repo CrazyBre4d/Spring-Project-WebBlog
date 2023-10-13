@@ -13,9 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.sql.Date;
@@ -36,7 +34,7 @@ public class MyController {
 
     //private static final String UPLOAD_DIR = "D:/post_images"; // Директория для загрузки файлов
 
-    @RequestMapping("/home")
+    @GetMapping("/home")
     public String mainPage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean loggedIn = authentication != null && authentication.isAuthenticated();
@@ -44,14 +42,14 @@ public class MyController {
         return "index";
     }
 
-    @RequestMapping("/post")
+    @GetMapping("/post")
     public String postPage(Model model) {
         Post post = new Post();
         model.addAttribute("post", post);
         return "post";
     }
 
-    @RequestMapping("/archive")
+    @GetMapping("/archive")
     public String allBlogs(Model model, Authentication authentication) {
         List<User> usersList = userService.getAllUsers();
         model.addAttribute("usersList", usersList);
@@ -115,13 +113,21 @@ public class MyController {
         }return "redirect:/";
     }
 
-    @RequestMapping("/my-blog")
-    public String showMyPosts(Model model, Authentication authentication) {
+    @GetMapping("/my-blog")
+    public String showMyBlog(Model model, Authentication authentication) {
         authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         List<Post> postList = userService.findByUsername(username).getPostList();
         model.addAttribute("posts", postList);
         User user = userService.findByUsername(username);
+        model.addAttribute("user", user);
+        return "page";
+    }
+    @GetMapping("/user-blog/{id}")
+    public String showUsersPosts(Model model, @PathVariable Long id) {
+        User user = userService.getUser(id);
+        List<Post> postList = user.getPostList();
+        model.addAttribute("posts", postList);
         model.addAttribute("user", user);
         return "page";
     }
