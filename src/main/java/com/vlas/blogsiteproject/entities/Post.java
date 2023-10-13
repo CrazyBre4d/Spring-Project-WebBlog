@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 
@@ -19,12 +20,15 @@ public class Post {
     private long postId;
 
     @Column(name = "title")
+    @NotBlank(message = "Поле обязательно к заполнению")
     private String title;
 
     @Column(name = "body")
+    @NotBlank(message = "Поле обязательно к заполнению")
     private String body;
 
     @Column(name = "picture")
+    @NotBlank(message = "Поле обязательно к заполнению")
     private String picture;
 
     @Column(name = "date_time")

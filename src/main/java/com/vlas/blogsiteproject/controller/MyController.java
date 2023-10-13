@@ -13,10 +13,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 import java.io.IOException;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -31,8 +34,6 @@ public class MyController {
     UserDetailsService userDetailsService;
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    //private static final String UPLOAD_DIR = "D:/post_images"; // Директория для загрузки файлов
 
     @GetMapping("/home")
     public String mainPage(Model model) {
@@ -57,7 +58,7 @@ public class MyController {
     }
 
 
-    @RequestMapping("/savePost")
+    @PostMapping("/savePost")
     public String savePost(@ModelAttribute("post") Post post,
                            @RequestParam("imageFile") MultipartFile imageFile, Authentication authentication) {
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -78,20 +79,25 @@ public class MyController {
         return "redirect:/";
     }
 
-    @RequestMapping("/registration")
+    @GetMapping("/registration")
     public String registration(Model model) {
         UserDetail userDetail = new UserDetail();
         User user = new User();
         model.addAttribute("user", user);
         model.addAttribute("userDetail", userDetail);
+
         return "registration";
     }
 
-    @RequestMapping("/register")
-    public String registerUser(@ModelAttribute("user") User user, @ModelAttribute("userDetail")UserDetail userDetail,
-                               @RequestParam("imageFile") MultipartFile imageFile, Authentication authentication) {
+    @PostMapping("/register")
+    public String registerUser(@Valid @ModelAttribute("user") User user, @Valid @ModelAttribute("userDetail")UserDetail userDetail,
+                               @RequestParam("imageFile") MultipartFile imageFile, Authentication authentication,
+                               BindingResult result, RedirectAttributes redirectAttributes) {
         if (!imageFile.isEmpty()) {
             try {
+                if(result.hasErrors()){
+                    return "registration";
+                }
                 String imageFilePath = ImageSaver.save(imageFile);
                 LocalDate date = LocalDate.now();
                 String hashPassword = passwordEncoder.encode(user.getPassword());
@@ -105,6 +111,8 @@ public class MyController {
 
                 userService.saveUser(user);
                 userDetailsService.saveUserDetail(userDetail);
+                redirectAttributes.addFlashAttribute("message", "Регистрация успешно выполнена");
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

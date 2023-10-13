@@ -60,8 +60,11 @@
     <input type="hidden" th:field="*{userDetail.userDetailId}" />
     <input type="hidden" th:field="*{userDetail.dateOfRegistration}">
 
-    Логин <input type="text" th:field="*{user.username}" /><br><br>
-    Пароль <input type="password" th:field="*{user.password}" /><br><br>
+    Логин <input type="text" id = "username" name="username" th:field="*{user.username}" /><br><br>
+    <!--<span th:if="${#fields.hasErrors('user.username')}" th:errors="*{user.username}"></span>-->
+    <form errors path="username"/>
+    Пароль <input type="password" id="password" name="password" th:field="*{user.password}" /><br><br>
+    <span th:if="${#fields.hasErrors('user.password')}" th:errors="*{user.password}"></span>
 
     Возраст <input type="text" th:field="*{userDetail.age}" />
     Имя <input type="text" th:field="*{userDetail.name}" />

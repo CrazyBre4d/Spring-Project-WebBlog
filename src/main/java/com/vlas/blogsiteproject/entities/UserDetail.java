@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -18,18 +19,23 @@ public class UserDetail {
     private long userDetailId;
 
     @Column(name = "name")
+    @NotBlank(message = "Имя не может быть пустым")
     private String name;
 
     @Column(name = "surname")
+    @NotBlank(message = "Поле обязательно к заполнению")
     private String surname;
 
     @Column(name = "age")
+    @NotBlank(message = "Поле обязательно к заполнению")
     private int age;
 
     @Column(name = "city")
+    @NotBlank(message = "Поле обязательно к заполнению")
     private String city;
 
     @Column(name = "description")
+    @NotBlank(message = "Поле обязательно к заполнению")
     private String description;
 
     @Column(name = "email")
