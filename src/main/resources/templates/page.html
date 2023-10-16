@@ -103,6 +103,7 @@
 						<th>Текст поста</th>
 						<th>Изображение поста</th>
 						<th>Время публикации</th>
+						<th>Лайк</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -110,10 +111,11 @@
 						<td th:text="${post.postId}"></td>
 						<td th:text="${post.title}"></td>
 						<td th:text="${post.body}"></td>
-						<td>
-							<img th:src="@{|/images/from_server/${post.picture}|}" alt="Изображение поста" width="100" height="100"/>
-						</td>
+						<td><img th:src="@{|/images/from_server/${post.picture}|}" alt="Изображение поста" width="100" height="100"/></td>
 						<td th:text="${post.dateTime}"></td>
+					<!--	<td><button th:if="${loggedIn}" th:attr="data-post-id=${post.id}" onclick="likePost(this)">Like</button>-->
+						<td><button  th:attr="post-id=${post.postId}" onclick="likePost(this)">Like</button>
+							<span th:text="${post.whoLiked}"></span></td>
 					</tr>
 					</tbody>
 				</table>

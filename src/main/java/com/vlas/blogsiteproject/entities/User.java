@@ -6,7 +6,10 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -34,6 +37,14 @@ public class User {
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.DETACH},
     mappedBy = "user")
     private List<Post> postList;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_post_like",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id")
+    )
+    private Set<Post> postSet = new HashSet<>();
 
     public User() {
     }

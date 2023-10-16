@@ -4,10 +4,13 @@ import com.vlas.blogsiteproject.config.ImageSaver;
 import com.vlas.blogsiteproject.entities.Post;
 import com.vlas.blogsiteproject.entities.User;
 import com.vlas.blogsiteproject.entities.UserDetail;
+import com.vlas.blogsiteproject.entities.UserLike;
 import com.vlas.blogsiteproject.service.PostService;
 import com.vlas.blogsiteproject.service.UserDetailsService;
+import com.vlas.blogsiteproject.service.UserLikesService;
 import com.vlas.blogsiteproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,6 +37,8 @@ public class MyController {
     UserDetailsService userDetailsService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserLikesService userLikesService;
 
     @GetMapping("/home")
     public String mainPage(Model model) {
@@ -140,4 +145,24 @@ public class MyController {
         return "page";
     }
 
+    @PostMapping("/likePost/{postId}")
+    @ResponseBody
+    public String likePost(@PathVariable Long postId, Authentication authentication) {
+        UserLike userLike = null;
+        Post post = postService.getPost(postId);
+
+        String username = authentication.getName();
+        User user = userService.findByUsername(username);
+        Long id = user.getUserId();
+
+        userLike.setUserId(id);
+        userLike.setPostId(postId);
+
+        userLikesService.saveLike(userLike);
+
+
+        return "/user-blog/{id}";
+        // 16.10.23 16:46 Доделать валидацию(менюшек и на ошибки), доделать лайки, доделать фронт
+        //return ResponseEntity.ok(new LikeResponse(post.getLikes()));
+    }
 }
