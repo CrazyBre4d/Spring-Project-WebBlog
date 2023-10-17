@@ -7,9 +7,7 @@ import com.vlas.blogsiteproject.service.UserDetailsService;
 import com.vlas.blogsiteproject.service.UserLikesService;
 import com.vlas.blogsiteproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -18,16 +16,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
-
 import javax.validation.Valid;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class MyController {
@@ -154,37 +148,6 @@ public class MyController {
         model.addAttribute("user", user);
         return "page";
     }
-
- /*   @GetMapping("/likePost/{postId}/like")
-    //@ResponseBody
-    public String likePost(@PathVariable Long postId,
-                           RedirectAttributes redirectAttributes,
-                           @RequestHeader(required = false) String referer,
-                           Authentication authentication) {
-        UserLike userLike = null;
-        Post post = postService.getPost(postId);
-
-        String username = authentication.getName();
-        User user = userService.findByUsername(username);
-        Long id = user.getUserId();
-        if(userLikesService.isLiked(postId,authentication)){
-            userLikesService.deleleLike(postId,authentication);
-        } else {
-            userLike.setUserId(id);
-            userLike.setPostId(postId);
-            userLikesService.saveLike(userLike);
-        }
-        UriComponents components = UriComponentsBuilder.fromHttpUrl(referer).build();
-
-        components.getQueryParams()
-                .entrySet()
-                .forEach(pair -> redirectAttributes.addAttribute(pair.getKey(), pair.getValue()));
-
-        return "redirect:" + components.getPath();
-
-        // 16.10.23 16:46 Доделать валидацию(менюшек и на ошибки), доделать лайки, доделать фронт
-        //return ResponseEntity.ok(new LikeResponse(post.getLikes()));
-    }*/
 
 
     @RequestMapping(value = "/likePost/{postId}/like", method = {RequestMethod.GET, RequestMethod.DELETE})
