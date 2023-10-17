@@ -150,7 +150,7 @@ public class MyController {
     }
 
 
-    @RequestMapping(value = "/likePost/{postId}/like", method = {RequestMethod.GET, RequestMethod.DELETE})
+    @GetMapping(value = "/likePost/{postId}/like")
     public String likePost(@PathVariable Long postId,
                            Authentication authentication,
                            @RequestHeader(required = false) String referer) {
