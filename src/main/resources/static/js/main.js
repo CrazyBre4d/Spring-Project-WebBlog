@@ -11,15 +11,23 @@ $(document).ready(function() {
 
 });
 
-function likePost(button) {
-	var postId = button.getAttribute('post-id');
+$('.like-button').click(function() {
+	var postId = $(this).data('post-id');
+	var button = $(this); // Сохраняем ссылку на кнопку
+
 	$.ajax({
-		url: '/likePost/' + postId,
 		type: 'POST',
-		success: function (response) {
-			// Обновите отображение количества лайков на странице
-			var likesElement = button.nextElementSibling;
-			likesElement.textContent = response.likes;
+		url: '/like/' + postId,
+		success: function() {
+			// Успешный ответ от сервера
+			var likes = button.data('likes'); // Получаем текущее количество лайков
+			likes++; // Увеличиваем количество лайков на 1
+			button.data('likes', likes); // Обновляем количество лайков
+			button.find('.like-count').text(likes); // Обновляем текст на кнопке
+			button.addClass('liked'); // Изменяем состояние кнопки
+		},
+		error: function() {
+			alert('Ошибка при отправке лайка.');
 		}
 	});
-}
+});

@@ -40,7 +40,7 @@ public class User {
 
     @ManyToMany
     @JoinTable(
-            name = "user_post_like",
+            name = "user_likes",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "post_id")
     )

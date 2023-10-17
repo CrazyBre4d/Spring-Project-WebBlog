@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,7 +16,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "post")
-public class Post {
+public class PostDecorator {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
@@ -40,6 +41,9 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
+    private boolean isLiked;
+    private int likes;
+
     @ManyToMany
     @JoinTable(
             name = "user_likes",
@@ -48,23 +52,39 @@ public class Post {
     )
     private Set<User> whoLiked = new HashSet<>();
 
-    public Post() {
+    public PostDecorator() {
     }
 
-    public Post(String title, String body, String picture) {
-        this.title = title;
-        this.body = body;
-        this.picture = picture;
+    public PostDecorator(Post post) {
+        this.title = post.getTitle();
+        this.body = post.getBody();
+        this.picture = post.getPicture();
+        this.postId = post.getPostId();
+        this.dateTime = post.getDateTime();
+
+        this.isLiked = false;
     }
 
+    public PostDecorator (Post post, boolean isLiked, int likes){
+        this.title = post.getTitle();
+        this.body = post.getBody();
+        this.picture = post.getPicture();
+        this.postId = post.getPostId();
+        this.dateTime = post.getDateTime();
+        this.isLiked = isLiked;
+        this.likes = likes;
+    }
 
     @Override
     public String toString() {
-        return "Post{" +
-                "postId=" + postId +
-                ", title='" + title + '\'' +
+        return "PostDecorator{" +
+                "title='" + title + '\'' +
                 ", body='" + body + '\'' +
-                ", picture=" + picture +
+                ", picture='" + picture + '\'' +
+                ", dateTime=" + dateTime +
+                ", user=" + user +
+                ", isLiked=" + isLiked +
+                ", whoLiked=" + whoLiked +
                 '}';
     }
 }
