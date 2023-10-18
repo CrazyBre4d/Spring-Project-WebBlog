@@ -2,9 +2,11 @@ package com.vlas.blogsiteproject.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
+@ToString
 @Getter
 @Setter
 @Entity
@@ -27,14 +29,5 @@ public class UserLike {
     public UserLike(long userId, long postId) {
         this.userId = userId;
         this.postId = postId;
-    }
-
-    @Override
-    public String toString() {
-        return "UserLikes{" +
-                "likeId=" + likeId +
-                ", userId=" + userId +
-                ", postId=" + postId +
-                '}';
     }
 }

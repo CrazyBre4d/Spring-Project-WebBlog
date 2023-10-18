@@ -3,6 +3,7 @@ package com.vlas.blogsiteproject.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-
+@ToString
 @Getter
 @Setter
 @Entity
@@ -61,7 +62,6 @@ public class PostDecorator {
         this.picture = post.getPicture();
         this.postId = post.getPostId();
         this.dateTime = post.getDateTime();
-
         this.isLiked = false;
     }
 
@@ -75,16 +75,4 @@ public class PostDecorator {
         this.likes = likes;
     }
 
-    @Override
-    public String toString() {
-        return "PostDecorator{" +
-                "title='" + title + '\'' +
-                ", body='" + body + '\'' +
-                ", picture='" + picture + '\'' +
-                ", dateTime=" + dateTime +
-                ", user=" + user +
-                ", isLiked=" + isLiked +
-                ", whoLiked=" + whoLiked +
-                '}';
-    }
 }

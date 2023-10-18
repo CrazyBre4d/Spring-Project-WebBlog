@@ -3,6 +3,7 @@ package com.vlas.blogsiteproject.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-
+@ToString
 @Getter
 @Setter
 @Entity
@@ -57,14 +58,4 @@ public class Post {
         this.picture = picture;
     }
 
-
-    @Override
-    public String toString() {
-        return "Post{" +
-                "postId=" + postId +
-                ", title='" + title + '\'' +
-                ", body='" + body + '\'' +
-                ", picture=" + picture +
-                '}';
-    }
 }

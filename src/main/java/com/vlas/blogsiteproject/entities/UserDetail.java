@@ -2,12 +2,14 @@ package com.vlas.blogsiteproject.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Date;
 import java.time.LocalDate;
 
+@ToString
 @Getter
 @Setter
 @Entity
@@ -61,20 +63,5 @@ public class UserDetail {
         this.description = description;
         this.email = email;
         this.dateOfRegistration = dateOfRegistration;
-    }
-
-    @Override
-    public String toString() {
-        return "UserDetail{" +
-                "userDetailId=" + userDetailId +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", age=" + age +
-                ", city='" + city + '\'' +
-                ", description='" + description + '\'' +
-                ", email='" + email + '\'' +
-                ", dateOfRegistration=" + dateOfRegistration +
-                ", user=" + user +
-                '}';
     }
 }

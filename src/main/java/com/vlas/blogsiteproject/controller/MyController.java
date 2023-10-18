@@ -41,23 +41,30 @@ public class MyController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean loggedIn = authentication != null && authentication.isAuthenticated();
         model.addAttribute("loggedIn", loggedIn);
+        User myUser = userService.findByUsername(authentication.getName());
+        model.addAttribute("myUser", myUser);
         return "index";
     }
 
     @GetMapping("/post")
     public String postPage(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Post post = new Post();
+        User myUser = userService.findByUsername(authentication.getName());
+        model.addAttribute("myUser", myUser);
         model.addAttribute("post", post);
         return "post";
     }
 
     @GetMapping("/archive")
     public String allBlogs(Model model, Authentication authentication) {
+        authentication = SecurityContextHolder.getContext().getAuthentication();
         List<User> usersList = userService.getAllUsers();
         model.addAttribute("usersList", usersList);
+        User myUser = userService.findByUsername(authentication.getName());
+        model.addAttribute("myUser", myUser);
         return "archive";
     }
-
 
     @PostMapping("/savePost")
     public String savePost(@ModelAttribute("post") Post post,
@@ -82,23 +89,19 @@ public class MyController {
 
     @GetMapping("/registration")
     public String registration(Model model) {
-        UserDetail userDetail = new UserDetail();
-        User user = new User();
-        model.addAttribute("user", user);
-        model.addAttribute("userDetail", userDetail);
-
+        model.addAttribute("user",new User());
+        model.addAttribute("userDetail", new UserDetail());
         return "registration";
     }
 
     @PostMapping("/register")
     public String registerUser(@Valid @ModelAttribute("user") User user, @Valid @ModelAttribute("userDetail")UserDetail userDetail,
-                               @RequestParam("imageFile") MultipartFile imageFile, Authentication authentication,
+                               @RequestParam("imageFile") MultipartFile imageFile,
                                BindingResult result, RedirectAttributes redirectAttributes) {
-        if (!imageFile.isEmpty()) {
+        if(result.hasErrors()){
+            return "registration";
+        } else if (!imageFile.isEmpty()) {
             try {
-                if(result.hasErrors()){
-                    return "registration";
-                }
                 String imageFilePath = ImageSaver.save(imageFile);
                 LocalDate date = LocalDate.now();
                 String hashPassword = passwordEncoder.encode(user.getPassword());
@@ -118,23 +121,31 @@ public class MyController {
                 e.printStackTrace();
             }
 
-
         }return "redirect:/";
     }
 
     @GetMapping("/my-blog")
     public String showMyBlog(Model model, Authentication authentication) {
         authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        List<Post> postList = userService.findByUsername(username).getPostList();
-        model.addAttribute("posts", postList);
-        User user = userService.findByUsername(username);
+        User user = userService.findByUsername(authentication.getName());
         model.addAttribute("user", user);
+        List<Post> postList = user.getPostList();
+        List<PostDecorator> postDecorators = new ArrayList<>();
+
+        for(Post post : postList){
+            boolean isLiked = userLikesService.isLiked(post.getPostId(),authentication);
+            int likes = userLikesService.getAllLikesForPost(post.getPostId());
+            postDecorators.add(new PostDecorator(post,isLiked, likes));
+        }
+
+        model.addAttribute("posts", postDecorators);
         return "page";
     }
     @GetMapping("/user-blog/{id}")
     public String showUsersPosts(Model model, @PathVariable Long id,Authentication authentication) {
+        authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.getUser(id);
+        User myUser = userService.findByUsername(authentication.getName());
         List<Post> postList = user.getPostList();
         List<PostDecorator> postDecorators = new ArrayList<>();
 
@@ -146,9 +157,9 @@ public class MyController {
 
         model.addAttribute("posts", postDecorators);
         model.addAttribute("user", user);
+        model.addAttribute("myUser", myUser);
         return "page";
     }
-
 
     @GetMapping(value = "/likePost/{postId}/like")
     public String likePost(@PathVariable Long postId,
@@ -163,7 +174,8 @@ public class MyController {
             userLikesService.saveLike(new UserLike(userId, postId));
         }
 
-        // Вернуть редирект на referer
         return "redirect:" + referer;
     }
+
+
 }

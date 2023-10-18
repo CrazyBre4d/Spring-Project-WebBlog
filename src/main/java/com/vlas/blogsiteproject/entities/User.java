@@ -2,6 +2,7 @@ package com.vlas.blogsiteproject.entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@ToString
 @Getter
 @Setter
 @Entity
@@ -52,17 +54,5 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-    }
-
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", userDetail=" + userDetail +
-                ", postList=" + postList +
-                '}';
     }
 }
