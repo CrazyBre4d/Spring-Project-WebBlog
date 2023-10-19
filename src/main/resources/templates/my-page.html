@@ -103,6 +103,7 @@
 						<th>Изображение поста</th>
 						<th>Время публикации</th>
 						<th>Лайк</th>
+						<th>Действия над постом</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -116,6 +117,11 @@
 								<i th:class="${ post.isLiked() ? 'fas fa-heart' : 'far fa-heart'}"></i>
 								<span th:text="${post.getLikes()}"></span>
 							</a>
+						</td>
+						<td>
+							<form th:method="delete" th:action="@{'/my-blog/{postId}' + ${post.postId}}">
+								<input type="submit" value="Удалить"  />
+							</form>
 						</td>
 					</tr>
 					</tbody>

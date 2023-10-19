@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 public class MyController {
@@ -139,7 +140,7 @@ public class MyController {
         }
 
         model.addAttribute("posts", postDecorators);
-        return "page";
+        return "my-page";
     }
     @GetMapping("/user-blog/{id}")
     public String showUsersPosts(Model model, @PathVariable Long id,Authentication authentication) {
@@ -176,9 +177,15 @@ public class MyController {
 
         return "redirect:" + referer;
     }
-    @PostMapping(value = "/my-blog/delete-post/{id}")
-    public String deletePost(@PathVariable Long id){
-        postService.deletePost(id);
+    @PostMapping(value = "/my-blog/{postId}")
+    public String deletePost(@PathVariable Long postId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findByUsername(authentication.getName());
+        if(userService.findByUsername(authentication.getName()).getUsername() == postService.getPost(postId).getUser().getUsername()){
+            postService.deletePost(postId);
+        } else {
+            throw new NoSuchElementException();
+        }
         return "redirect:/my-blog";
     }
 }
