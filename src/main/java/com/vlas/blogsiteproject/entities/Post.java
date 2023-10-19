@@ -1,6 +1,7 @@
 package com.vlas.blogsiteproject.entities;
 
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,6 +15,7 @@ import java.util.Set;
 @ToString
 @Getter
 @Setter
+@EqualsAndHashCode
 @Entity
 @Table(name = "post")
 public class Post {

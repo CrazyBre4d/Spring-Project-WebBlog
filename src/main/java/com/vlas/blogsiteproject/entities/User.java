@@ -1,5 +1,6 @@
 package com.vlas.blogsiteproject.entities;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,10 +13,12 @@ import java.util.List;
 import java.util.Set;
 
 @ToString
+@EqualsAndHashCode
 @Getter
 @Setter
 @Entity
-@Table(name = "user_main")
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = "username"),
+       name = "user_main")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

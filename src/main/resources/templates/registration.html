@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -50,29 +51,42 @@
 </head>
 <body>
 <h2 class="center-top">Регистрация</h2>
-<form th:action="@{/register}" method="post" class="center-bottom" enctype="multipart/form-data" th:object="${user}" >
-    <input type="hidden" th:field="*{userId}" />
-    <input type="hidden" th:field="*{userDetail}" />
-    <input type="hidden" th:field="*{userDetail.userDetailId}" />
-    <input type="hidden" th:field="*{userDetail.dateOfRegistration}">
+<form th:action="@{/register}" method="post" enctype="multipart/form-data" th:object="${user}" >
+    <label for="username">Логин:</label>
+    <input type="text" id="username" name="username" th:field="*{username}" /><br>
 
-    Логин <input type="text" name="username" th:field="*{username}" /><br><br>
-    <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name error</td>
-    <form errors path="username"/>
-    Пароль <input type="password" name="password" th:field="*{password}" /><br><br>
-    <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Pass error</td>
+    <label for="password">Пароль:</label>
+    <input type="password" id="password" name="password" th:field="*{password}" /><br>
 
-    Возраст <input type="text" th:field="*{userDetail.age}" />
-    Имя <input type="text" th:field="*{userDetail.name}" />
-    Фамилия <input type="text" th:field="*{userDetail.surname}" />
-    Город <input type="text" th:field="*{userDetail.city}" />
-    О себе <input type="text" th:field="*{userDetail.description}" />
-    Почта <input type="text" th:field="*{userDetail.email}" />
+    <label for="fullName">Полное имя:</label>
+    <input type="text" id="fullName" name="fullName" th:field="*{userDetail.name}" /><br>
+
+    <label for="surname">Фамилия:</label>
+    <input type="text" id="surname" name="surname" th:field="*{userDetail.surname}" /><br>
+
+    <label for="age">Возраст:</label>
+    <input type="text" id="age" name="age" th:field="*{userDetail.age}" /><br>
+
+    <label for="city">Город:</label>
+    <input type="text" id="city" name="city" th:field="*{userDetail.city}" /><br>
+
+    <label for="description">О себе:</label>
+    <input type="text" id="description" name="description" th:field="*{userDetail.description}" /><br>
+
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email" th:field="*{userDetail.email}" /><br>
+
     <label for="image">Выберите фото профиля:</label><br><br>
     <input type="file" id="image" name="imageFile" accept="image/*" required /><br><br>
-    <!--Дата регистрации <input type="date" th:field="*{userDetail.dateOfRegistration}" />-->
-    <br>
-    <input type="submit" value="Зарегистрироваться" />
+
+    <!-- Вывод ошибок -->
+    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+        <ul>
+            <li th:each="error : ${#fields.errors('*')}" th:text="${error}"></li>
+        </ul>
+    </div>
+
+    <input type="submit" value="Зарегистрироваться">
 </form>
 </body>
 </html>

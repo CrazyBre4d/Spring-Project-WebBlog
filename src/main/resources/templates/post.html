@@ -92,6 +92,11 @@
 	<header class="page-title theme-bg-light text-center gradient py-5">
 		<h1 class="heading">Страница публикации</h1>
 	</header>
+	<div th:if="${message}">
+		<div class="alert alert-success">
+			<span th:text="${message}"></span>
+		</div>
+	</div>
 	<article class="content px-3 py-5 p-md-5">
 		<div class="container">
 			<form th:action="@{/savePost}" th:object="${post}" method="post" enctype="multipart/form-data">

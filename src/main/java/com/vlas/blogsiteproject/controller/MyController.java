@@ -116,7 +116,7 @@ public class MyController {
 
                 userService.saveUser(user);
                 userDetailsService.saveUserDetail(userDetail);
-                redirectAttributes.addFlashAttribute("message", "Регистрация успешно выполнена");
+                //redirectAttributes.addFlashAttribute("message", "Регистрация успешно выполнена");
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -180,11 +180,13 @@ public class MyController {
     @PostMapping(value = "/my-blog/{postId}")
     public String deletePost(@PathVariable Long postId){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(userService.findByUsername(authentication.getName()).getUsername() == postService.getPost(postId).getUser().getUsername()){
+        if(userService.findByUsername(authentication.getName()).getUsername().equals(postService.getPost(postId).getUser().getUsername())){
             postService.deletePost(postId);
         } else {
             throw new NoSuchElementException();
         }
         return "redirect:/my-blog";
     }
+
+    //@GetMapping(value = )
 }

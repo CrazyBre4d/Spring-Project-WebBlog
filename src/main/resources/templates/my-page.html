@@ -122,6 +122,9 @@
 							<form th:method="delete" th:action="@{'/my-blog/{postId}' + ${post.postId}}">
 								<input type="submit" value="Удалить"  />
 							</form>
+							<form th:method="put" th:action="@{'/my-blog/{postId}' + ${post.postId}}">
+								<input type="submit" value="Редактировать"  />
+							</form>
 						</td>
 					</tr>
 					</tbody>
