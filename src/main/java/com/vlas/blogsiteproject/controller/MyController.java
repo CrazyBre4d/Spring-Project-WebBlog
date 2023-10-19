@@ -121,7 +121,7 @@ public class MyController {
                 e.printStackTrace();
             }
 
-        }return "redirect:/";
+        }return "redirect:/post";
     }
 
     @GetMapping("/my-blog")
@@ -176,6 +176,9 @@ public class MyController {
 
         return "redirect:" + referer;
     }
-
-
+    @PostMapping(value = "/my-blog/delete-post/{id}")
+    public String deletePost(@PathVariable Long id){
+        postService.deletePost(id);
+        return "redirect:/my-blog";
+    }
 }
