@@ -180,7 +180,6 @@ public class MyController {
     @PostMapping(value = "/my-blog/{postId}")
     public String deletePost(@PathVariable Long postId){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findByUsername(authentication.getName());
         if(userService.findByUsername(authentication.getName()).getUsername() == postService.getPost(postId).getUser().getUsername()){
             postService.deletePost(postId);
         } else {
