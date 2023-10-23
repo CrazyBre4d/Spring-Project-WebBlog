@@ -50,10 +50,9 @@ public class MyController {
     @GetMapping("/post")
     public String postPage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Post post = new Post();
         User myUser = userService.findByUsername(authentication.getName());
         model.addAttribute("myUser", myUser);
-        model.addAttribute("post", post);
+        model.addAttribute("post", new Post());
         return "post";
     }
 
@@ -113,7 +112,6 @@ public class MyController {
 
                 user.setUserDetail(userDetail);
                 userDetail.setUser(user);
-
                 userService.saveUser(user);
                 userDetailsService.saveUserDetail(userDetail);
                 //redirectAttributes.addFlashAttribute("message", "Регистрация успешно выполнена");
@@ -122,7 +120,7 @@ public class MyController {
                 e.printStackTrace();
             }
 
-        }return "redirect:/post";
+        }return "redirect:/";
     }
 
     @GetMapping("/my-blog")
@@ -188,5 +186,11 @@ public class MyController {
         return "redirect:/my-blog";
     }
 
-    //@GetMapping(value = )
+    @RequestMapping(value ="/test")
+    public String test(){
+        return "registration1";
+    }
+
+
+
 }

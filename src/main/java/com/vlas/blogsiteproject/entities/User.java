@@ -30,8 +30,8 @@ public class User {
     private String username;
 
     @Column(name = "password")
-    @NotBlank(message = "Логин не может быть пустым")
-    @Size(min = 6, message = "пароль должен быть не менее 6 символов")
+    @NotBlank(message = "Пароль не может быть пустым")
+    @Size(min = 6, message = "Пароль должен содержать не менее 6 символов")
     private String password;
 
 

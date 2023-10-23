@@ -9,7 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
 import java.time.LocalDate;
 
 @ToString
@@ -36,11 +35,9 @@ public class UserDetail {
     private int age;
 
     @Column(name = "city")
-    @NotEmpty(message = "Поле обязательно к заполнению")
     private String city;
 
     @Column(name = "description")
-    @NotEmpty(message = "Поле обязательно к заполнению")
     private String description;
 
     @Column(name = "email")

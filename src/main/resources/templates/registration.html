@@ -51,12 +51,71 @@
 </head>
 <body>
 <h2 class="center-top">Регистрация</h2>
-<form th:action="@{/register}" method="post" enctype="multipart/form-data" th:object="${user}" >
-    <label for="username">Логин:</label>
-    <input type="text" id="username" name="username" th:field="*{username}" /><br>
+<form action="#" th:action="@{/register}" method="post" enctype="multipart/form-data"  >
+    <table>
+        <tr>
+            <td>Имя:</td>
+            <td><input type="text" th:field="*{userDetail.name}"> </td>
+            <td th:if="${#fields.hasErrors('userDetail.name')}" th:errors="*{userDetail.name}">Name Error</td>
+        </tr>
+
+        <tr>
+            <td>Фамилия:</td>
+            <td><input type="text" th:field="*{userDetail.surname}"> </td>
+            <td th:if="${#fields.hasErrors('userDetail.surname')}" th:errors="*{userDetail.surname}">Name Error</td>
+        </tr>
+
+        <tr>
+            <td>Логин:</td>
+            <td><input type="text" th:field="*{user.username}"> </td>
+            <td th:if="${#fields.hasErrors('user.username')}" th:errors="*{user.username}">Name Error</td>
+        </tr>
+
+        <tr>
+            <td>Пароль:</td>
+            <td><input type="text" th:field="*{user.password}"> </td>
+            <td th:if="${#fields.hasErrors('user.password')}" th:errors="*{user.password}">Name Error</td>
+        </tr>
+
+        <tr>
+            <td>Возраст:</td>
+            <td><input type="text" th:field="*{userDetail.age}"> </td>
+            <td th:if="${#fields.hasErrors('userDetail.age')}" th:errors="*{userDetail.age}">Name Error</td>
+        </tr>
+
+        <tr>
+            <td>Город:</td>
+            <td><input type="text" th:field="*{userDetail.city}"> </td>
+            <td th:if="${#fields.hasErrors('userDetail.city')}" th:errors="*{userDetail.city}">Name Error</td>
+        </tr>
+
+        <tr>
+            <td>О себе:</td>
+            <td><input type="text" th:field="*{userDetail.description}"> </td>
+            <td th:if="${#fields.hasErrors('userDetail.description')}" th:errors="*{userDetail.description}">Name Error</td>
+        </tr>
+
+        <tr>
+            <td>Почта:</td>
+            <td><input type="text" th:field="*{userDetail.email}"> </td>
+            <td th:if="${#fields.hasErrors('userDetail.email')}" th:errors="*{userDetail.email}">Name Error</td>
+        </tr>
+
+        <tr>
+            <td><button type="submit">Зарегистрировать</button></td>
+        </tr>
+
+    </table>
+
+
+
+
+
+<!--    <label for="username">Логин:</label>
+    <input type="text" id="username" name="username" th:field="*{user.username}" /><br>
 
     <label for="password">Пароль:</label>
-    <input type="password" id="password" name="password" th:field="*{password}" /><br>
+    <input type="password" id="password" name="password" th:field="*{user.password}" /><br>
 
     <label for="fullName">Полное имя:</label>
     <input type="text" id="fullName" name="fullName" th:field="*{userDetail.name}" /><br>
@@ -78,15 +137,9 @@
 
     <label for="image">Выберите фото профиля:</label><br><br>
     <input type="file" id="image" name="imageFile" accept="image/*" required /><br><br>
+    <input type="submit" value="Зарегистрироваться">-->
 
-    <!-- Вывод ошибок -->
-    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
-        <ul>
-            <li th:each="error : ${#fields.errors('*')}" th:text="${error}"></li>
-        </ul>
-    </div>
 
-    <input type="submit" value="Зарегистрироваться">
 </form>
 </body>
 </html>
